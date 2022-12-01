@@ -1,12 +1,32 @@
+'''
+# Handle '/start' and '/help'
+@bot.message_handler(commands=['help', 'start'])
+async def send_welcome(message):
+    await bot.reply_to(message, """\
+Hi there, I am EchoBot.
+I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
+""")
+
+
+# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
+@bot.message_handler(func=lambda message: True)
+async def echo_message(message):
+    await bot.reply_to(message, message.text)
+
+
+import asyncio
+asyncio.run(bot.polling())
+'''
+
 import os
-import telebot
+from telebot.async_telebot import AsyncTeleBotimport telebot
 from dotenv import load_dotenv
 
 load_dotenv()
 
 chave = os.getenv('TOKEN')
 
-bot = telebot.TeleBot(chave, parse_mode="HTML")
+bot = AsyncTeleBot(chave, parse_mode="HTML")
 
 textol1 = """</b><code>, como eu posso te ajudar?
 
@@ -96,41 +116,42 @@ Entre em </code>/contato <code> para criarmos um orçamento personalizado.</code
 """
 
 @bot.message_handler(commands=["start"])
-def start(mensagem):
-  bot.send_message(mensagem.chat.id, "<code>Olá </code><b>" + mensagem.from_user.first_name + textol1)
+async def start(mensagem):
+  await bot.send_message(mensagem.chat.id, "<code>Olá </code><b>" + mensagem.from_user.first_name + textol1)
 
 @bot.message_handler(commands=["portfolio"])
-def portfolio(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol2)
+async def portfolio(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol2)
 
 @bot.message_handler(commands=["contato"])
-def contato(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol3)
+async def contato(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol3)
 
 @bot.message_handler(commands=["chatbot"])
-def chatbot(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol4)
+async def chatbot(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol4)
 
 @bot.message_handler(commands=["site"])
-def site(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol5)
+async def site(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol5)
 
 @bot.message_handler(commands=["appweb"])
-def appweb(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol6)
+async def appweb(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol6)
 
 @bot.message_handler(commands=["appmobile"])
-def appmobile(mensagem):
-  bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol7)
+async def appmobile(mensagem):
+  await bot.send_message(mensagem.chat.id, "<b>" + mensagem.from_user.first_name + textol7)
 
-def verificar(mensagem):
+async def verificar(mensagem):
   return True
 
 @bot.message_handler(func=verificar)
-def responder(mensagem):
-  bot.reply_to(
+async def responder(mensagem):
+  await bot.reply_to(
     mensagem, mensagem.from_user.first_name +
     ", não utilize o teclado, clique apenas nas opções que aparecem nas mensagens, precedidas por uma barra."
   )
 
-bot.infinity_polling()
+import asyncio
+asyncio.run(bot.polling())
