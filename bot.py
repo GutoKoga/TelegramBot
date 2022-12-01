@@ -19,7 +19,7 @@ asyncio.run(bot.polling())
 '''
 
 import os
-from telebot.async_telebot import AsyncTeleBotimport telebot
+from telebot.async_telebot import AsyncTeleBotimport
 from dotenv import load_dotenv
 
 load_dotenv()
