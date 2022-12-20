@@ -139,7 +139,8 @@ def verificar(mensagem):
 def responder(mensagem):
     bot.reply_to(
         mensagem, mensagem.from_user.first_name +
-                  ", não utilize o teclado, clique apenas nas opções que aparecem nas mensagens, precedidas por uma barra."
+                  '''<code>, não utilize o teclado, clique apenas nas opções que aparecem nas mensagens, precedidas por uma barra ou utilize o menu aqui
+                  👇</code>'''
     )
 
 
